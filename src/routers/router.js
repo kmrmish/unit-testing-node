@@ -1,0 +1,1 @@
+//combines all the services endpoints
