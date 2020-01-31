@@ -6,6 +6,10 @@ var authController = require('../../controllers/auth.controller');
 //note : should is a function and needs to be executed
 var should = require('chai').should(); 
 
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+chai.should();
 
 
 /**@description 
@@ -57,6 +61,13 @@ describe('AuthController',function(){
                 isAuth.should.be.false;
                 done();
             });
+        });
+    });
+
+
+    describe('isAuthrizedPromise',function(){
+        it('Should return false if not authorized', function(){
+            return authController.isAuthorizedPromise('admin').should.eventually.be.false;
         });
     });
 });
