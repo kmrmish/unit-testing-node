@@ -1,5 +1,12 @@
 var assert = require('assert');
 
+/**
+ * should variable sometimes used, so its included
+ * (for test case : should allow testing nulls)
+ */
+// var should = require('chai').should();
+
+
 /**@description
  * Notice: we are not requiring 'should' here
  * but it still works, becasue should appends itself
@@ -9,7 +16,7 @@ var assert = require('assert');
  * hence 'should' is available everywhere
  */
 describe('Basic Mocha Test',function(){
-    it('should have property name equals to mukesh', function(){
+    it('should have property name equals to Mukesh', function(){
         var obj = {name: 'Mukesh', gender : 'male'};
 
         obj.should.have.property('name').equal('Mukesh');
@@ -25,9 +32,23 @@ describe('Basic Mocha Test',function(){
         obj1.should.equal(obj2);
     });
 
-    if('should be copy of another object (not same)', function() {
+    it('should be copy of another object (not same)', function() {
         var obj1 = {name: 'Mukesh', gender : 'male'};
         var obj2 = {name: 'Mukesh', gender : 'male'};
-        obj1.should.equal(obj2);
+        obj1.should.deep.equal(obj2);
     });
+
+    // it('should allow testing nulls', function() {
+    //     var iAmNull = null;
+
+        /**
+         * below will fail.
+         */
+        // iAmNull.should.not.exist;
+
+        /**
+         * we can use 'should' variable for this
+         */
+    //     should.not.exist(iAmNull);
+    // });
 });
