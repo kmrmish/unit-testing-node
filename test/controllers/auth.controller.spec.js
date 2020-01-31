@@ -92,14 +92,50 @@ describe('AuthController',function(){
     });
 
     describe('getIndex', function(){
-        it('should render index (should be called one time, with argumanet "index")', function(){
-            var req = {};
+        var user = {};
+        beforeEach(function(){
+            user = {
+                roles : ['user'],
+                isAuthorized : function(neededRole) {
+                    return this.roles.indexOf(neededRole) >= 0;
+                }
+            };
+        });
+
+        it('should render index if authorized (should be called one time, with argumanet "index")', function(){
+            var isAuth = sinon.stub(user, 'isAuthorized').returns(true);
+            var req = {user: user};
             var res = {
                 render: sinon.spy()
             }
             authController.getIndex(req, res);
+            isAuth.calledOnce.should.be.true;
             res.render.calledOnce.should.be.true;
             res.render.firstCall.args[0].should.equal('index');
+        });
+
+        it('should render notAuth if not authorized (should be called one time, with argumanet "notAuth")', function(){
+            var isAuth = sinon.stub(user, 'isAuthorized').returns(false);
+            var req = {user: user};
+            var res = {
+                render: sinon.spy()
+            }
+            authController.getIndex(req, res);
+            isAuth.calledOnce.should.be.true;
+            res.render.calledOnce.should.be.true;
+            res.render.firstCall.args[0].should.equal('notAuth');
+        });
+
+        it('should render error if error (should be called one time, with argumanet "error")', function(){
+            var isAuth = sinon.stub(user, 'isAuthorized').throws();
+            var req = {user: user};
+            var res = {
+                render: sinon.spy()
+            }
+            authController.getIndex(req, res);
+            isAuth.calledOnce.should.be.true;
+            res.render.calledOnce.should.be.true;
+            res.render.firstCall.args[0].should.equal('error');
         });
     });
 });
