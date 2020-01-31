@@ -1,7 +1,12 @@
 var assert = require('assert');
 var authController = require('../../controllers/auth.controller');
 
-
+/**@description 
+ * try using describe.only() and describe.skip() also
+ * this.skip() can also be used on conditional basis
+ *      eg: if we dont want a test to run in certain 
+ *          environment conditions
+*/
 describe('AuthController',function(){
     
     beforeEach('setting up roles', function settingUpRoles(){
@@ -17,6 +22,8 @@ describe('AuthController',function(){
             authController.setRoles(['user','admin']);
             assert.equal(true, authController.isAuthorized('admin'));
         });
+        it('should not allow get if not allowed');
+        it('should allow get if authorized');
     });
 
     describe('isAuthrizedAsync',function(){
