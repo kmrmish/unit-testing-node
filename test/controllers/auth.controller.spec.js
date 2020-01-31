@@ -22,22 +22,36 @@ var sinon = require('sinon');
 describe('AuthController',function(){
     
     beforeEach('setting up roles', function settingUpRoles(){
-        authController.setRoles(['user']);
+        // authController.setRoles(['user']);
     });
 
     describe('isAuthrized',function(){
+        var user = {};
+        beforeEach(function(){
+            user = {
+                roles : ['user'],
+                isAuthorized : function(neededRole) {
+                    return this.roles.indexOf(neededRole) >= 0;
+                }
+            };
+            sinon.spy(user,'isAuthorized');
+            authController.setUser(user);
+        });
+
         it('Should return false if not authorized', function(){
             const isAuth = authController.isAuthorized('admin');
             // assert.equal(false, isAuth);
             // expect(isAuth).to.be.false;
+            user.isAuthorized.calledOnce.should.be.true;
             isAuth.should.be.false;
         });
 
         it('Should return true if authorized', function(){
             authController.setRoles(['user','admin']);
-            var isAuth = authController.isAuthorized('admin');
+            const isAuth = authController.isAuthorized('admin');
             // assert.equal(true, authController.isAuthorized('admin'));
             // expect(isAuth).to.be.true;
+            user.isAuthorized.calledOnce.should.be.true;
             isAuth.should.be.true;
 
         });
@@ -46,7 +60,9 @@ describe('AuthController',function(){
     });
 
     describe('isAuthrizedAsync',function(){
-        
+        beforeEach('setting up roles', function settingUpRoles(){
+            authController.setRoles(['user']);
+        });
 
         it('Should return false if not authorized', function(done){
 
@@ -67,6 +83,9 @@ describe('AuthController',function(){
 
 
     describe('isAuthrizedPromise',function(){
+        beforeEach('setting up roles', function settingUpRoles(){
+            authController.setRoles(['user']);
+        });
         it('Should return false if not authorized', function(){
             return authController.isAuthorizedPromise('admin').should.eventually.be.false;
         });
