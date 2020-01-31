@@ -11,6 +11,7 @@ var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 chai.should();
 
+var sinon = require('sinon');
 
 /**@description 
  * try using describe.only() and describe.skip() also
@@ -68,6 +69,18 @@ describe('AuthController',function(){
     describe('isAuthrizedPromise',function(){
         it('Should return false if not authorized', function(){
             return authController.isAuthorizedPromise('admin').should.eventually.be.false;
+        });
+    });
+
+    describe('getIndex', function(){
+        it('should render index (should be called one time, with argumanet "index")', function(){
+            var req = {};
+            var res = {
+                render: sinon.spy()
+            }
+            authController.getIndex(req, res);
+            res.render.calledOnce.should.be.true;
+            res.render.firstCall.args[0].should.equal('index');
         });
     });
 });
