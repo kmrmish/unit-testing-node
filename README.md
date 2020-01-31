@@ -1,2 +1,2 @@
 # node-app
-Learning App
+Unit Testing using Mocha, Chai and Sinon
