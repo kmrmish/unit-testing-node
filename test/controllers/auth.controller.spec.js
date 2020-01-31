@@ -1,5 +1,12 @@
-var assert = require('assert');
+
+// var assert = require('assert');
 var authController = require('../../controllers/auth.controller');
+// var expect = require('chai').expect;
+
+//note : should is a function and needs to be executed
+var should = require('chai').should(); 
+
+
 
 /**@description 
  * try using describe.only() and describe.skip() also
@@ -15,12 +22,19 @@ describe('AuthController',function(){
 
     describe('isAuthrized',function(){
         it('Should return false if not authorized', function(){
-            assert.equal(false, authController.isAuthorized('admin'));
+            const isAuth = authController.isAuthorized('admin');
+            // assert.equal(false, isAuth);
+            // expect(isAuth).to.be.false;
+            isAuth.should.be.false;
         });
 
         it('Should return true if authorized', function(){
             authController.setRoles(['user','admin']);
-            assert.equal(true, authController.isAuthorized('admin'));
+            var isAuth = authController.isAuthorized('admin');
+            // assert.equal(true, authController.isAuthorized('admin'));
+            // expect(isAuth).to.be.true;
+            isAuth.should.be.true;
+
         });
         it('should not allow get if not allowed');
         it('should allow get if authorized');
@@ -38,7 +52,9 @@ describe('AuthController',function(){
             // this.timeout(2500);
             
             authController.isAuthorizedAsync('admin',function(isAuth){
-                assert.equal(false, isAuth);
+                // assert.equal(false, isAuth);
+                // expect(isAuth).to.be.false;
+                isAuth.should.be.false;
                 done();
             });
         });
