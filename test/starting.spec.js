@@ -51,4 +51,27 @@ describe('Basic Mocha Test',function(){
          */
     //     should.not.exist(iAmNull);
     // });
+
+
+    xdescribe('add without setup/teardown', function(){
+        var num;
+        beforeEach(function() {
+            num = 5;
+        });
+    
+        it('should be 10 when adding 5 to 5', function(){
+            num = add(num, 5);
+            num.should.equal(10);
+        });
+    
+        xit('should be 12 when adding 7 to 5', function(){
+            num = add(num, 7);
+            num.should.equal(12);
+        });
+    });
 });
+
+function add(num1, num2){
+    return num1 + num2;
+}
+
