@@ -4,7 +4,8 @@
   "description": "Learning App",
   "main": "index.js",
   "scripts": {
-    "test": "mocha './test/**/*.spec.js'"
+    "test:mocha": "mocha './test/**/*.spec.js'",
+    "test:istanbul": "istanbul cover node_modules/.bin/_mocha -- test/**/*"
   },
   "repository": {
     "type": "git",
