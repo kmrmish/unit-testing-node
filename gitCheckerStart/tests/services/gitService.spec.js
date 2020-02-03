@@ -155,7 +155,9 @@ describe('GitService', function(){
             .onSecondCall().callsArgWith(1,repoResponse).returns(new PassThrough());
 
             return gitService.getUser('kmrmish').then(
-                function(user) {
+                (user) => {
+                    this.request.getCall(0).args[0].headers['User-Agent'].should.equal('gitExample');
+                    this.request.getCall(1).args[0].path.should.equal('/users/kmrmish/repos');
                     user.login.should.equal('kmrmish');
                     user.should.have.property('repos');
                 }
