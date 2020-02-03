@@ -53,7 +53,7 @@ describe('Basic Mocha Test',function(){
     // });
 
 
-    xdescribe('add without setup/teardown', function(){
+    describe('add without setup/teardown', function(){
         var num;
         beforeEach(function() {
             num = 5;
